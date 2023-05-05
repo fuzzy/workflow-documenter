@@ -170,9 +170,14 @@ if __name__ == "__main__":
         # Now that we've parsed any commandline args, we can parse all of our workflows and build
         # a list of objects to dump to individual files. That's the fun part.
         flows = []
+        dirty = False
         for arg in args.inputs:
             obj = WorkflowParser(arg)
             if args.outdir and os.path.isdir(args.outdir):
+                dirty = True
                 with open(f"{args.outdir}/{obj.output}", "w+") as fp:
                     print(f"Processed: {obj.input} -> {args.outdir}/{obj.output}")
                     fp.write(obj.to_markdown())
+
+        if dirty:
+            sys.exit(1)
