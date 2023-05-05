@@ -102,6 +102,7 @@ class WorkflowParser:
             retv = [f"## {i}", ""]
             for itm in d:
                 retv.append(f"#### {itm['name']}")
+                retv.append("")
                 for k, v in itm.items():
                     if k != "name":
                         retv.append(f"- **{k}**: {v}")
