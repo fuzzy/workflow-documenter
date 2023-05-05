@@ -112,7 +112,7 @@ class WorkflowParser:
         retv = []
         retv.append(f"# ({self._input}) {self.name}")
         retv.append("")
-        retv.append("### Example")
+        retv.append("## Example")
         retv.append("")
         retv.append("```yaml")
         retv.append("name: ExampleService-DEV")
