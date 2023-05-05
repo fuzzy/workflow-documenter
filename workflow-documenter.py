@@ -29,7 +29,7 @@ class WorkflowParser:
 
         if fn and os.path.isfile(fn):
             self._input = fn
-            self._otput = f"{fn.split('.ya')[0]}.md"
+            self._otput = f"{os.path.basename(fn).split('.ya')[0]}.md"
             self._data = yaml.safe_load(open(fn, "r").read())
             if "name" not in self._data.keys():
                 raise DocumentError(
