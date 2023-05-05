@@ -1,0 +1,5 @@
+- id: workflow-documentation
+  name: Generate Github Actions re-usable workflow documentation.
+  entry: workflow-documenter.py
+  language: python
+  types: [yaml]
