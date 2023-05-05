@@ -101,7 +101,7 @@ class WorkflowParser:
         def dump_input(i, d):
             retv = [f"## {i}", ""]
             for itm in d:
-                retv.append(f"#### {itm['name']}")
+                retv.append(f"### {itm['name']}")
                 retv.append("")
                 for k, v in itm.items():
                     if k != "name":
@@ -112,9 +112,9 @@ class WorkflowParser:
         retv = []
         retv.append(f"# ({self._input}) {self.name}")
         retv.append("")
-        retv.append("**Example**")
+        retv.append("### Example")
         retv.append("")
-        retv.append("```")
+        retv.append("```yaml")
         retv.append("name: ExampleService-DEV")
         retv.extend("on:\n  push:\n    branches: [main]".split("\n"))
         retv.extend("jobs:\n  build:".split("\n"))
