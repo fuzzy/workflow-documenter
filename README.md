@@ -4,16 +4,6 @@
 Generate markdown formatted documentation for your re-usable Github Actions
 workflows. Designed to be used as part of a pre-commit workflow.
 
-
-
-
-## Authors
-
-- [@fuzzy](https://www.github.com/fuzzy)
-
-
-
-
 ## Usage
 
 ```
@@ -29,4 +19,9 @@ options:
   -d OUTDIR, --outdir OUTDIR
                         Specify the output directory (default: `./docs/`).
 ```
+
+## Authors
+
+- [@fuzzy](https://www.github.com/fuzzy)
+
 
