@@ -81,6 +81,14 @@ class WorkflowParser:
     def valid(self):
         return self._valid
 
+    @property
+    def input(self):
+        return self._input
+
+    @property
+    def output(self):
+        return self._otput
+
     def to_markdown(self):
         def input_value(i):
             if i["type"] == "string":
@@ -140,11 +148,14 @@ class DocumentError(Exception):
 if __name__ == "__main__":
     if len(sys.argv) >= 2:
         parser = argparse.ArgumentParser(
-            prog=sys.argv[0],
+            prog=os.path.basename(sys.argv[0]),
             description="Generates documentation for Github Actions Re-usable Workflows",
         )
         parser.add_argument(
-            "-d", "--outdir", help="Specify the output directory (default: `./docs/`)."
+            "-d",
+            "--outdir",
+            help="Specify the output directory (default: `./docs/`).",
+            default="./docs",
         )
         parser.add_argument(
             "inputs",
@@ -161,4 +172,7 @@ if __name__ == "__main__":
         flows = []
         for arg in args.inputs:
             obj = WorkflowParser(arg)
-            print(obj.to_markdown())
+            if args.outdir and os.path.isdir(args.outdir):
+                with open(f"{args.outdir}/{obj.output}", "w+") as fp:
+                    print(f"Processed: {obj.input} -> {args.outdir}/{obj.output}")
+                    fp.write(obj.to_markdown())
