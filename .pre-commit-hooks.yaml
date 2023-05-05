@@ -1,4 +1,4 @@
-- id: workflow-documentation
+- id: workflow-documenter
   name: Generate Github Actions re-usable workflow documentation.
   entry: workflow-documenter.py
   language: python
