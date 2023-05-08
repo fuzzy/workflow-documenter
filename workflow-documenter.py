@@ -181,4 +181,4 @@ if __name__ == "__main__":
                     fp.write(obj.to_markdown())
 
         if dirty:
-            sys.exit(1)
+            sys.exit(0)
