@@ -171,32 +171,32 @@ if __name__ == "__main__":
         args.inputs.sort()
         care_about = []
 
-        p = subprocess.run(
-            "git diff --cached --name-only", shell=True, check=True, capture_output=True
-        )
-        for change in p.stdout.decode("utf-8").split("\n"):
-            if change.startswith(".github/workflows/") and change.endswith(".yaml"):
-                care_about.append(change)
-
-        # Now that we've parsed any commandline args, we can parse all of our workflows and build
-        # a list of objects to dump to individual files. That's the fun part.
-        flows = []
-        dirty = False
-        for arg in care_about:
-            obj = WorkflowParser(arg)
-            # Check to see if the output already exists
-            if os.path.isfile(f"{args.outdir}/{obj.output}"):
-                print(time.time() - os.stat(f"{args.outdir}/{obj.output}").st_mtime)
-                # and if it was regenerated within the last minute
-                if (
-                    time.time() - os.stat(f"{args.outdir}/{obj.output}").st_mtime
-                ) <= 30:
-                    continue
-            if args.outdir and os.path.isdir(args.outdir):
-                dirty = True
-                with open(f"{args.outdir}/{obj.output}", "w+") as fp:
-                    print(f"Processed: {obj.input} -> {args.outdir}/{obj.output}")
-                    fp.write(obj.to_markdown())
-
-        if dirty:
-            sys.exit(0)
+        if len(args.inputs) <= 0:
+            p = subprocess.run(
+                "git diff --cached --name-only",
+                shell=True,
+                check=True,
+                capture_output=True,
+            )
+            for change in p.stdout.decode("utf-8").split("\n"):
+                if change.startswith(".github/workflows/") and change.endswith(".yaml"):
+                    care_about.append(change)
+        else:
+            care_about = args.inputs
+            # Now that we've parsed any commandline args, we can parse all of our workflows and build
+            # a list of objects to dump to individual files. That's the fun part.
+            flows = []
+            for arg in care_about:
+                obj = WorkflowParser(arg)
+                # Check to see if the output already exists
+                if os.path.isfile(f"{args.outdir}/{obj.output}"):
+                    print(time.time() - os.stat(f"{args.outdir}/{obj.output}").st_mtime)
+                    # and if it was regenerated within the last minute
+                    if (
+                        time.time() - os.stat(f"{args.outdir}/{obj.output}").st_mtime
+                    ) <= 30:
+                        continue
+                if args.outdir and os.path.isdir(args.outdir):
+                    with open(f"{args.outdir}/{obj.output}", "w+") as fp:
+                        print(f"Processed: {obj.input} -> {args.outdir}/{obj.output}")
+                        fp.write(obj.to_markdown())
