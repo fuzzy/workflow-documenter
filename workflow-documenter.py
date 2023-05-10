@@ -190,7 +190,6 @@ if __name__ == "__main__":
                 obj = WorkflowParser(arg)
                 # Check to see if the output already exists
                 if os.path.isfile(f"{args.outdir}/{obj.output}"):
-                    print(time.time() - os.stat(f"{args.outdir}/{obj.output}").st_mtime)
                     # and if it was regenerated within the last minute
                     if (
                         time.time() - os.stat(f"{args.outdir}/{obj.output}").st_mtime
