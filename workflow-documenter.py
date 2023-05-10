@@ -168,18 +168,20 @@ if __name__ == "__main__":
         )
         args = parser.parse_args()
         args.inputs.sort()
+        care_about = []
 
         p = subprocess.run(
             "git diff --cached --name-only", shell=True, check=True, capture_output=True
         )
-        print(p.stdout.decode("utf-8").split("\n"))
-        sys.exit(1)
+        for change in p.stdout.decode("utf-8").split("\n"):
+            if change.startswith(".github/workflows/") and change.endswith(".yaml"):
+                care_about.append(change)
 
         # Now that we've parsed any commandline args, we can parse all of our workflows and build
         # a list of objects to dump to individual files. That's the fun part.
         flows = []
         dirty = False
-        for arg in args.inputs:
+        for arg in care_about:
             obj = WorkflowParser(arg)
             if args.outdir and os.path.isdir(args.outdir):
                 dirty = True
