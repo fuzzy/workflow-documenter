@@ -14,6 +14,7 @@ import os
 import sys
 import json
 import argparse
+import subprocess
 
 # 3rd party imports
 import yaml
@@ -167,6 +168,12 @@ if __name__ == "__main__":
         )
         args = parser.parse_args()
         args.inputs.sort()
+
+        p = subprocess.run(
+            "git diff --cached --name-only", shell=True, check=True, capture_output=True
+        )
+        print(p.stdout)
+        sys.exit(0)
 
         # Now that we've parsed any commandline args, we can parse all of our workflows and build
         # a list of objects to dump to individual files. That's the fun part.
