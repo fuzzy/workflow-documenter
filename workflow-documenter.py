@@ -189,8 +189,7 @@ if __name__ == "__main__":
                 # and if it was regenerated within the last minute
                 if (
                     time.time() - os.stat(f"{args.outdir}/{obj.output}").st_mtime
-                    <= 60000
-                ):
+                ) <= 60000:
                     continue
             if args.outdir and os.path.isdir(args.outdir):
                 dirty = True
