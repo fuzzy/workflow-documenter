@@ -66,7 +66,6 @@ class WorkflowParser:
                             raise WorkflowError(
                                 f"{self._input}:on->workflow_call->{k}->{_td['name']} has no type."
                             )
-                        # print(_td)
                         self._ast[k].append(_td)
 
     def __str__(self):
