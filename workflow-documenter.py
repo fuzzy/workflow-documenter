@@ -173,7 +173,7 @@ if __name__ == "__main__":
             "git diff --cached --name-only", shell=True, check=True, capture_output=True
         )
         print(p.stdout)
-        sys.exit(0)
+        sys.exit(1)
 
         # Now that we've parsed any commandline args, we can parse all of our workflows and build
         # a list of objects to dump to individual files. That's the fun part.
