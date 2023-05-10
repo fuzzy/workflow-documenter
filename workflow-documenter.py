@@ -183,6 +183,14 @@ if __name__ == "__main__":
         dirty = False
         for arg in care_about:
             obj = WorkflowParser(arg)
+            # Check to see if the output already exists
+            if os.path.isfile(f"{args.outdir}/{obj.output}"):
+                # and if it was regenerated within the last minute
+                if (
+                    time.time() - os.stat(f"{args.outdir}/{obj.output}").st_mtime
+                    <= 60000
+                ):
+                    continue
             if args.outdir and os.path.isdir(args.outdir):
                 dirty = True
                 with open(f"{args.outdir}/{obj.output}", "w+") as fp:
