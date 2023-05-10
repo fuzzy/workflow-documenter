@@ -172,7 +172,7 @@ if __name__ == "__main__":
         p = subprocess.run(
             "git diff --cached --name-only", shell=True, check=True, capture_output=True
         )
-        print(p.stdout)
+        print(p.stdout.decode("utf-8").split("\n"))
         sys.exit(1)
 
         # Now that we've parsed any commandline args, we can parse all of our workflows and build
