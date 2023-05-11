@@ -214,7 +214,7 @@ if __name__ == "__main__":
                 buff = fp.readline()
                 while buff:
                     lines.append(buff.strip())
-                    if buff.strip() == "[//]: # AUTODOC":
+                    if buff.strip() == "[//]: # (AUTODOC)":
                         if not flag:
                             flist = []
                             for flow_doc in os.listdir(args.outdir):
