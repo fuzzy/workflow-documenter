@@ -204,10 +204,10 @@ if __name__ == "__main__":
                     with open(f"{args.outdir}/{obj.output}", "w+") as fp:
                         print(f"Processed: {obj.input} -> {args.outdir}/{obj.output}")
                         fp.write(obj.to_markdown())
-                if args.readme:
+                if args.no_readme:
                     flows.append(copy.deepcopy(obj))
 
-        if args.readme:
+        if args.no_readme:
             flag = False
             lines = []
             with open("README.md", "r") as fp:
