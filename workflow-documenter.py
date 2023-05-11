@@ -35,9 +35,7 @@ class WorkflowParser:
             self._otput = f"{os.path.basename(fn).split('.ya')[0]}.md"
             self._data = yaml.safe_load(open(fn, "r").read())
             if "name" not in self._data.keys():
-                raise DocumentError(
-                    "No name element in this workflow. If indeed, that is what it is."
-                )
+                sys.exit(0)
 
             if "on" in self._data.keys() and True not in self._data.keys():
                 self._top = "on"
