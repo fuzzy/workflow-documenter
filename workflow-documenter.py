@@ -12,6 +12,7 @@ The following exit status codes have meaning:
 # Stdlib imports
 import os
 import sys
+import copy
 import json
 import time
 import argparse
@@ -154,6 +155,13 @@ if __name__ == "__main__":
             description="Generates documentation for Github Actions Re-usable Workflows",
         )
         parser.add_argument(
+            "-n",
+            "--no-readme",
+            help="Do not pdate the readme between `[//]: # AUTODOC` tags with a T.O.C.",
+            action="store_false",
+            default=True,
+        )
+        parser.add_argument(
             "-d",
             "--outdir",
             help="Specify the output directory (default: `./docs/`).",
@@ -168,6 +176,7 @@ if __name__ == "__main__":
         )
         args = parser.parse_args()
         args.inputs.sort()
+        flows = []
         care_about = []
 
         if len(args.inputs) <= 0:
@@ -184,7 +193,6 @@ if __name__ == "__main__":
             care_about = args.inputs
             # Now that we've parsed any commandline args, we can parse all of our workflows and build
             # a list of objects to dump to individual files. That's the fun part.
-            flows = []
             for arg in care_about:
                 obj = WorkflowParser(arg)
                 # Check to see if the output already exists
@@ -198,3 +206,28 @@ if __name__ == "__main__":
                     with open(f"{args.outdir}/{obj.output}", "w+") as fp:
                         print(f"Processed: {obj.input} -> {args.outdir}/{obj.output}")
                         fp.write(obj.to_markdown())
+                if args.readme:
+                    flows.append(copy.deepcopy(obj))
+
+        if args.readme:
+            flag = False
+            lines = []
+            with open("README.md", "r") as fp:
+                buff = fp.readline()
+                while buff:
+                    lines.append(buff.strip())
+                    if buff.strip() == "[//]: # AUTODOC":
+                        if not flag:
+                            flist = []
+                            for flow_doc in os.listdir(args.outdir):
+                                if flow_doc.endswith(".md"):
+                                    flist.append(flow_doc)
+                            flist.sort()
+                            for fl in flist:
+                                lines.append(f"- [{fl}]({args.outdir}/{fl})")
+                        flag = True
+                    buff = fp.readline()
+            if flag:
+                with open("README.md", "w+") as fp:
+                    for line in lines:
+                        fp.write(line + "\n")
