@@ -219,6 +219,7 @@ if __name__ == "__main__":
 
                     if tbuff == "[//]: # (AUTODOC)":
                         if not flag:
+                            lines.append("")
                             flist = []
                             for flow_doc in os.listdir(args.outdir):
                                 if flow_doc.endswith(".md"):
@@ -229,6 +230,7 @@ if __name__ == "__main__":
                             flag = True
                         elif flag:
                             flag = False
+                            lines.append("")
                             lines.append("[//]: # (AUTODOC)")
                     buff = fp.readline()
 

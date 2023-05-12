@@ -23,5 +23,7 @@ Specify the output directory (default: `./docs/`).
 ## Autotoc example
 
 [//]: # (AUTODOC)
+
 - [example.md](./docs/example.md)
+
 [//]: # (AUTODOC)
