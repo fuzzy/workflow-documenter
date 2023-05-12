@@ -213,8 +213,11 @@ if __name__ == "__main__":
             with open("README.md", "r") as fp:
                 buff = fp.readline()
                 while buff:
-                    if buff.strip() == "[//]: # (AUTODOC)":
-                        lines.append(buff.strip())
+                    tbuff = buff.strip()
+                    if not flag:
+                        lines.append(tbuff)
+
+                    if tbuff == "[//]: # (AUTODOC)":
                         if not flag:
                             flist = []
                             for flow_doc in os.listdir(args.outdir):
@@ -226,10 +229,9 @@ if __name__ == "__main__":
                             flag = True
                         elif flag:
                             flag = False
-                    if not flag:
-                        lines.append(buff.strip())
+                            lines.append("[//]: # (AUTODOC)")
                     buff = fp.readline()
-            if flag:
-                with open("README.md", "w+") as fp:
-                    for line in lines:
-                        fp.write(line + "\n")
+
+            with open("README.md", "w+") as fp:
+                for line in lines:
+                    fp.write(line + "\n")

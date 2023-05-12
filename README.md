@@ -12,16 +12,16 @@ usage: ./grwrg.py [-h] [-d OUTDIR] inputs [inputs ...]
 Generates documentation for Github Actions Re-usable Workflows
 
 positional arguments:
-  inputs                The space separated list of files to parse.
+inputs                The space separated list of files to parse.
 
 options:
-  -h, --help            show this help message and exit
-  -d OUTDIR, --outdir OUTDIR
-                        Specify the output directory (default: `./docs/`).
+-h, --help            show this help message and exit
+-d OUTDIR, --outdir OUTDIR
+Specify the output directory (default: `./docs/`).
 ```
 
-## Authors
+## Autotoc example
 
-- [@fuzzy](https://www.github.com/fuzzy)
-
-
+[//]: # (AUTODOC)
+- [example.md](./docs/example.md)
+[//]: # (AUTODOC)
