@@ -105,7 +105,10 @@ class WorkflowParser:
                 retv.append("")
                 for k, v in itm.items():
                     if k != "name":
-                        retv.append(f"- **{k}**: {v}")
+                        if type(v) == str and k == "default" and len(v) == 0:
+                            retv.append(f"- **{k}**: NONE")
+                        else:
+                            retv.append(f"- **{k}**: {v}")
                 retv.append("")
             return retv
 
